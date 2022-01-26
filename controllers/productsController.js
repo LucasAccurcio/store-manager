@@ -32,7 +32,7 @@ products.post(
 
 products.get(
   '/',
-  rescue(async (req, res) => {
+  rescue(async (_req, res) => {
     const getProducts = await productsService.getAll();
 
     res.status(200).json(getProducts);
