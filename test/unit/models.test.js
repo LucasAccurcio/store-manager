@@ -4,7 +4,7 @@ const { expect } = require('chai');
 const connection = require('../../models/connection');
 const productsModel = require('../../models/productsModel');
 
-describe('Insere um novo produto no BD', () => {
+describe('Camada Model - Insere um novo produto no BD', () => {
   const payloadProduct = {
     name: 'Martelo de Thor',
     quantity: 10,
