@@ -54,7 +54,7 @@ describe("Products", () => {
     expect(Object.keys(body)).toContain("message");
   }
   
-  describe.skip("1 - Crie um endpoint para o cadastro de produtos", () => {
+  describe("1 - Crie um endpoint para o cadastro de produtos", () => {
     it("Será validado que o campo name esteja presente no body da requisição", async()=>{
       await frisby
         .post(`${url}/products/`, {
@@ -194,7 +194,7 @@ describe("Products", () => {
     });
   });
 
-  describe.skip("2 - Crie um endpoint para listar os produtos", () => {
+  describe("2 - Crie um endpoint para listar os produtos", () => {
     it("Será validado que todos produtos estão sendo retornados", async () => {
       await frisby
         .get(`${url}/products`)
@@ -262,7 +262,7 @@ describe("Products", () => {
     });
   });
 
-  describe.skip("3 - Crie um endpoint para atualizar um produto", () => {
+  describe("3 - Crie um endpoint para atualizar um produto", () => {
     it("Será validado que não é possível atualizar um produto com o nome menor que 5 caracteres", async () => {
       let result;
       let resultProductId;
@@ -417,7 +417,7 @@ describe("Products", () => {
     });
   });
 
-  describe.skip("4 - Crie um endpoint para deletar um produto", () => {
+  describe("4 - Crie um endpoint para deletar um produto", () => {
     it("Será validado que é possível deletar um produto com sucesso", async () => {
       let result;
       let resultProductId;

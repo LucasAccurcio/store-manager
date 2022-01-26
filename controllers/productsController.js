@@ -4,20 +4,25 @@ const joi = require('joi');
 
 const productsService = require('../services/productsService');
 
+const productSchema = joi.object({
+  name: joi.string().min(5).required(),
+  quantity: joi.number().integer().positive().required(),
+});
+
+const validateProductSchema = (body) => {
+  const { error } = productSchema.validate(body);
+
+  if (error) {
+    throw error;
+  }
+};
+
 products.post(
   '/',
   rescue(async (req, res) => {
+    validateProductSchema(req.body);
+
     const { name, quantity } = req.body;
-
-    const { error } = joi.object({
-      name: joi.string().min(5).required(),
-      quantity: joi.number().integer().positive().required(),
-    })
-    .validate(req.body);
-
-    if (error) {
-      throw error;
-    }
 
     const newProduct = await productsService.create({ name, quantity });
 
@@ -25,7 +30,7 @@ products.post(
   }),
 );
 
-/* products.get(
+products.get(
   '/',
   rescue(async (req, res) => {
     const getProducts = await productsService.getAll();
@@ -34,6 +39,7 @@ products.post(
   }),
 );
 
+/*
 products.get(
   '/:id',
   rescue(async (req, res) => {
@@ -43,3 +49,5 @@ products.get(
     res.status(200).json(getProduct);
   }),
 ); */
+
+module.exports = products;

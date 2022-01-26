@@ -12,6 +12,14 @@ const create = async ({ name, quantity }) => {
   };
 };
 
+const getAll = async () => {
+  const [allProducts] = await connection
+    .execute('SELECT * FROM `products`');
+
+    return allProducts;
+};
+
 module.exports = {
   create,
+  getAll,
 };
