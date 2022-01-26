@@ -11,7 +11,23 @@ describe('Camada Model - Insere um novo produto no BD', () => {
   }
 
   before(async () => {
-    const execute = [{ insertId: 1 }]; // retorno esperado nesse teste
+    const execute = [
+      {
+        id: 1,
+        name: "Martelo de Thor",
+        quantity: 10,
+      },
+      {
+        id: 2,
+        name: "Traje de encolhimento",
+        quantity: 20,
+      },
+      {
+        id: 3,
+        name: "Escudo do Capitão América",
+        quantity: 30,
+      }
+  ]; // retorno esperado nesse teste
 
     sinon.stub(connection, 'execute').resolves(execute);
   });
@@ -21,7 +37,7 @@ describe('Camada Model - Insere um novo produto no BD', () => {
     connection.execute.restore();
   });
 
-  describe('quando é inserido com sucesso', () => {
+  describe('POST-quando é inserido com sucesso', () => {
 
     it('retorna um objeto', async () => {
       const response = await productsModel.create(payloadProduct);
@@ -29,11 +45,27 @@ describe('Camada Model - Insere um novo produto no BD', () => {
       expect(response).to.be.a('object')
     });
 
-    it('tal objeto possui o "id" do novo filme inserido', async () => {
+    it('tal objeto possui o "id" do novo produto inserido', async () => {
       const response = await productsModel.create(payloadProduct);
 
       expect(response).to.have.a.property('id')
     });
-
   });
+
+  describe('GET-quando é recebido todos os dados', () => {
+    
+    it('retorna um objeto', async () => {
+      const response = await productsModel.getAll();
+
+      expect(response).to.be.a('object');
+    });
+
+    it('tal objeto possui o "id" do novo produto inserido', async () => {
+      const response = await productsModel.getAll();
+      expect(response).to.have.a.property('id');
+      expect(response).to.have.a.property('name');
+      expect(response).to.have.a.property('quantity');
+    });
+  });
+
 });
