@@ -31,4 +31,5 @@ const getAll = async () => {
 module.exports = {
   create,
   getAll,
+  isValid,
 };

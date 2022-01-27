@@ -20,7 +20,7 @@ const validateProductSchema = (body) => {
 products.post(
   '/',
   rescue(async (req, res) => {
-    validateProductSchema(req.body);
+    // validateProductSchema(req.body);
 
     const { name, quantity } = req.body;
 
