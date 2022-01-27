@@ -31,7 +31,17 @@ const getAll = async () => {
     return allProducts;
 };
 
+const getById = async (id) => {
+  const [getProduct] = await connection
+    .execute('SELECT * FROM `products` WHERE `id` = ?',
+    [id]);
+    if (!getProduct[0]) return { message: 'Product not found' };
+
+    return getProduct[0];
+};
+
 module.exports = {
   create,
   getAll,
+  getById,
 };

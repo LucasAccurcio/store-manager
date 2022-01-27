@@ -43,16 +43,17 @@ products.get(
   }),
 );
 
-/*
 products.get(
   '/:id',
   rescue(async (req, res) => {
     const { id } = req.params;
     const getProduct = await productsService.getById(id);
 
+    if (getProduct.message) res.status(404).json(getProduct);
+
     res.status(200).json(getProduct);
   }),
-); */
+);
 
 module.exports = {
   products, 

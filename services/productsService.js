@@ -16,11 +16,6 @@ const create = async ({ name, quantity }) => {
     .create({ name, quantity });
 
   return (createNewProduct);
-/*   return {
-    id,
-    name,
-    quantity,
-  }; */
 };
 
 const getAll = async () => {
@@ -31,8 +26,15 @@ const getAll = async () => {
   return allProducts;
 };
 
+const getById = async (id) => {
+  const getProduct = await productModel.getById(id);
+
+  return getProduct;
+};
+
 module.exports = {
   create,
   getAll,
+  getById,
   isValid,
 };
