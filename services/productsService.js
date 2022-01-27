@@ -12,12 +12,15 @@ const create = async ({ name, quantity }) => {
 
   if (!isProductValid) return false;
 
-  const { id } = await productModel
+  const createNewProduct = await productModel
     .create({ name, quantity });
 
-  return {
+  return (createNewProduct);
+/*   return {
     id,
-  };
+    name,
+    quantity,
+  }; */
 };
 
 const getAll = async () => {

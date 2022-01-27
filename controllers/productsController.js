@@ -6,7 +6,7 @@ const productsService = require('../services/productsService');
 
 const productSchema = joi.object({
   name: joi.string().min(5).required(),
-  quantity: joi.number().integer().positive().required(),
+  quantity: joi.number().integer().min(1).required(),
 });
 
 const validateProductSchema = (body) => {
@@ -20,12 +20,14 @@ const validateProductSchema = (body) => {
 products.post(
   '/',
   rescue(async (req, res) => {
-    // validateProductSchema(req.body);
+    validateProductSchema(req.body);
 
     const { name, quantity } = req.body;
 
     const newProduct = await productsService.create({ name, quantity });
 
+    if (newProduct.message) return res.status(409).json(newProduct.message);
+    
     res.status(201).json(newProduct);
   }),
 );
