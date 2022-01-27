@@ -1,23 +1,28 @@
-/* eslint-disable complexity */
 const joi = require('joi');
+
+function responseJoiError(err) {
+  switch (err.message) {
+    case '"name" is required':
+      return { code: 400, message: err.message };
+    case '"name" length must be at least 5 characters long':
+      return { code: 422, message: err.message };
+    case '"quantity" is required':
+      return { code: 400, message: err.message };
+    case '"quantity" must be greater than or equal to 1':
+      return { code: 422, message: '"quantity" must be a number larger than or equal to 1' };
+    default:
+      return { code: 422, message: '"quantity" must be a number larger than or equal to 1' };
+  }
+}
 
 module.exports = (err, _req, res, next) => {
   if (!joi.isError(err)) {
     return next(err);
   }
 
-  switch (err.message) {
-    case '"name" is required':
-      return res.status(400).json(err.message);
-    case '"name" length must be at least 5 characters long':
-      return res.status(422).json(err.message);
-    case 'Product already exists':
-      return res.status(409).json(err.message);
-    case '"quantity" is required':
-      return res.status(400).json(err.message);
-    case '"quantity must be a number larger than or equal to 1"':
-      return res.status(422).json(err.message);
-    default:
-      res.status(422).json({ code: 'unprocessable_entity', message: err.message });
-  }
+  // res.status(422).json(err.message);
+
+  const joiErrors = responseJoiError(err);
+
+  res.status(joiErrors.code).json({ message: joiErrors.message });
 };

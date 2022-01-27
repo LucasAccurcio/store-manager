@@ -4,7 +4,7 @@ const { expect } = require('chai');
 const productsModel = require('../../models/productsModel');
 const productsService = require('../../services/productsService');
 
-describe('Camada Service', () => {
+describe('###Camada Service', () => {
   describe('Valida a função "isValid"', () => {
     describe('quando os dados estão corretos retornando um booleano com valor "true"', () => {
       const payloadProduct = {
@@ -99,15 +99,19 @@ describe('Camada Service', () => {
       const payloadProduct = {
         name: 'Martelo de Thor',
         quantity: 10,
-      }
+        }
 
       before(() => {
-        const ID_EXAMPLE = 1;
+        const execute = {
+        id: 4,
+        name: 'Martelo de Thor',
+        quantity: 10,
+        }
 
         sinon.stub(productsModel, 'create')
-          .resolves({ id: ID_EXAMPLE });
+          .resolves(execute);
       });
-
+  
       // Restauraremos a função `create` original após os testes.
       after(() => {
         productsModel.create.restore();
@@ -129,27 +133,20 @@ describe('Camada Service', () => {
 
   describe('GET-Solicita os dados de produtos do BD', () => {  
     describe('quando o retorno é um sucesso', () => {
-      const payloadProduct = [
-        {
-          id: 1,
-          name: "Martelo de Thor",
-          quantity: 10,
-        },
-        {
-          id: 2,
-          name: "Traje de encolhimento",
-          quantity: 20,
-        },
-        {
-          id: 3,
-          name: "Escudo do Capitão América",
-          quantity: 30,
-        }
-      ];
-
+      const payloadProduct = {
+        id: 1,
+        name: "Martelo de Thor",
+        quantity: 10,
+      };
       before(() => {
+        const execute = {
+            id: 1,
+            name: "Martelo de Thor",
+            quantity: 10,
+          };
+
         sinon.stub(productsModel, 'getAll')
-          .resolves(payloadProduct);
+          .resolves(execute);
       });
 
       // Restauraremos a função `getAll` original após os testes.
@@ -160,13 +157,14 @@ describe('Camada Service', () => {
       it('retorna um array', async () => {
         const response = await productsService.getAll();
 
-        expect(response).to.be.an('array');
+        expect(response).to.be.a('object');
       });
 
       it('retorna os dados gravados no BD', async () => {
         const response = await productsService.getAll();
-
-        expect(response).to.be.equal(payloadProduct);
+        expect(response).to.have.a.property('id');
+        expect(response).to.have.a.property('name');
+        expect(response).to.have.a.property('quantity');
       });
     });
 

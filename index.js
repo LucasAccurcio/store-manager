@@ -15,7 +15,7 @@ app.get('/', (_request, response) => {
   response.send();
 });
 
-app.use('/products', productController);
+app.use('/products', productController.products);
 
 app.use(middlewares.joiError);
 app.use(middlewares.domainError);

@@ -4,30 +4,17 @@ const { expect } = require('chai');
 const connection = require('../../models/connection');
 const productsModel = require('../../models/productsModel');
 
-describe('Camada Model - Insere um novo produto no BD', () => {
+describe('###Camada Model - Insere um novo produto no BD', () => {
   const payloadProduct = {
-    name: 'Martelo de Thor',
-    quantity: 10,
+    name: "Jóia do infinito",
+    quantity: 100,
   }
-
   before(async () => {
-    const execute = [
-      {
-        id: 1,
-        name: "Martelo de Thor",
-        quantity: 10,
-      },
-      {
-        id: 2,
-        name: "Traje de encolhimento",
-        quantity: 20,
-      },
-      {
-        id: 3,
-        name: "Escudo do Capitão América",
-        quantity: 30,
-      }
-  ]; // retorno esperado nesse teste
+    const execute = [{
+        id: 4,
+        name: "Jóia do infinito",
+        quantity: 100,
+      }]; // retorno esperado nesse teste
 
     sinon.stub(connection, 'execute').resolves(execute);
   });

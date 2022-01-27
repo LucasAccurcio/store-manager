@@ -15,6 +15,8 @@ const validateProductSchema = (body) => {
   if (error) {
     throw error;
   }
+
+  return null;
 };
 
 products.post(
@@ -26,7 +28,7 @@ products.post(
 
     const newProduct = await productsService.create({ name, quantity });
 
-    if (newProduct.message) return res.status(409).json(newProduct.message);
+    if (newProduct.message) return res.status(409).json({ message: newProduct.message });
     
     res.status(201).json(newProduct);
   }),
@@ -52,4 +54,7 @@ products.get(
   }),
 ); */
 
-module.exports = products;
+module.exports = {
+  products, 
+  validateProductSchema,
+};
