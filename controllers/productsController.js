@@ -55,6 +55,31 @@ products.get(
   }),
 );
 
+products.put(
+  '/:id',
+  rescue(async (req, res) => {
+    validateProductSchema(req.body);
+    const { id } = req.params;
+    const { name, quantity } = req.body;
+    const getProduct = await productsService.update({ id, name, quantity });
+
+    if (getProduct.message) res.status(404).json(getProduct);
+
+    res.status(200).json(getProduct);
+  }),
+);
+
+products.delete(
+  '/:id',
+  rescue(async (req, res) => {
+    const { id } = req.params;
+    const deletedProduct = await productsService.remove(id);
+
+    if (deletedProduct.message) res.status(404).json(deletedProduct);
+    res.status(200).json(deletedProduct);
+  }),
+);
+
 module.exports = {
   products, 
   validateProductSchema,

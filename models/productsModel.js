@@ -40,8 +40,21 @@ const getById = async (id) => {
     return getProduct[0];
 };
 
+const update = async ({ id, name, quantity }) => {
+  await connection
+    .execute('UPDATE `products` SET `name` = ?, `quantity` = ? WHERE `id` = ?',
+    [name, quantity, id]);
+};
+
+const remove = async (id) => {
+  await connection
+    .execute('DELETE FROM `products` WHERE id = ?', [id]);
+};
+
 module.exports = {
   create,
   getAll,
   getById,
+  update,
+  remove,
 };

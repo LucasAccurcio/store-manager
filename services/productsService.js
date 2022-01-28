@@ -29,6 +29,31 @@ const getAll = async () => {
 const getById = async (id) => {
   const getProduct = await productModel.getById(id);
 
+  if (!getProduct) {
+    throw (new Error({ message: 'Erro não tratado ao encontrar produto por ID' }));
+  }
+
+  return getProduct;
+};
+
+const update = async ({ id, name, quantity }) => {
+  const getProduct = await productModel.getById(id);
+
+  if (getProduct.message) return getProduct;
+
+  await productModel.update({ id, name, quantity });
+
+  const updatedProduct = await productModel.getById(id);
+  return updatedProduct;
+};
+
+const remove = async (id) => {
+  const getProduct = await productModel.getById(id);
+
+  if (getProduct.message) return getProduct;
+
+  await productModel.remove(id);
+
   return getProduct;
 };
 
@@ -37,4 +62,6 @@ module.exports = {
   getAll,
   getById,
   isValid,
+  update,
+  remove,
 };
