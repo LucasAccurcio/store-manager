@@ -6,7 +6,8 @@ const bodyParser = require('body-parser');
 const app = express();
 
 const middlewares = require('./controllers/middlewares');
-const productController = require('./controllers/productsController');
+const productsController = require('./controllers/productsController');
+const salesController = require('./controllers/salesController');
 
 app.use(bodyParser.json());
 
@@ -15,7 +16,8 @@ app.get('/', (_request, response) => {
   response.send();
 });
 
-app.use('/products', productController.products);
+app.use('/products', productsController.products);
+app.use('/sales', salesController.sales);
 
 app.use(middlewares.joiError);
 app.use(middlewares.domainError);
