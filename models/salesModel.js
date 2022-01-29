@@ -14,25 +14,49 @@ const create = async (newSale, newSaleId) => {
         'INSERT INTO `sales_products` (`sale_id`, `product_id`, `quantity`) VALUES ?',
         [saleItems],
       );
-        // TALVEZ O IDEAL SEJA CRIAR UMA NOVA FUNÇÃO PARA RECUPERAR UM ARRAY DE VENDAS DAQUELE SALE_ID ou **utilizar o getAllByID**
+      const [getSales] = await connection
+    .execute('SELECT `product_id`, `quantity` FROM `sales_products` WHERE `sale_id` = ?',
+    [newSaleId]);
+    return getSales;
   } catch (error) {
     return { message: 'Erro ao conectar no Banco de Dados!' };
   }
 };
 
-/* const getAll = async () => {
-  const [allProducts] = await connection
-    .execute('SELECT * FROM `products`');
-
-    return allProducts;
-}; */
+const getAll = async () => {
+  try {
+    const [allSales] = await connection
+      .execute(`SELECT 
+      sp.sale_id AS \`saleId\`,
+      sa.date AS \`date\`,
+      sp.product_id AS \`product_id\`,
+      sp.quantity AS \`quantity\`
+      FROM \`sales_products\` AS sp
+      INNER JOIN \`sales\` AS sa 
+      ON sp.sale_id = sa.id`);
+      return allSales;
+  } catch (error) {
+    return { message: 'Erro ao conectar no Banco de Dados!' };
+  }
+};
 
 const getById = async (id) => {
+  try {
   const [getSales] = await connection
-    .execute('SELECT `product_id`, `quantity` FROM `sales_products` WHERE `sale_id` = ?',
+    .execute(`SELECT 
+    sa.date AS \`date\`,
+    sp.product_id AS \`product_id\`,
+    sp.quantity AS \`quantity\`
+    FROM \`sales_products\` AS sp
+    INNER JOIN \`sales\` AS sa 
+    ON sp.sale_id = sa.id
+    WHERE sp.sale_id = ?`,
     [id]);
     if (!getSales[0]) return { message: 'Sale not found' };
     return getSales;
+  } catch (error) {
+    return { message: 'Erro ao conectar no Banco de Dados!' };
+  }
 };
 
 /*
@@ -50,7 +74,7 @@ const remove = async (id) => {
 module.exports = {
   createNewSalesId,
   create,
-  // getAll,
+  getAll,
   getById,
   // update,
   // remove,

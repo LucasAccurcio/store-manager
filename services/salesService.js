@@ -12,10 +12,10 @@ const create = async (newSales) => {
   // if (!isProductValid) return false;
   const newSalesId = await salesModel.createNewSalesId();
 
-  await salesModel
+  const newSaleCreated = await salesModel
     .create(newSales, newSalesId);
 
-  const newSaleCreated = await salesModel.getById(newSalesId);
+  // const newSaleCreated = await salesModel.getById(newSalesId);
   
   return {
     id: newSalesId,
@@ -23,12 +23,12 @@ const create = async (newSales) => {
   };
 };
 
-/* const getAll = async () => {
-  const allProducts = await salesModel.getAll();
+const getAll = async () => {
+  const allSales = await salesModel.getAll();
 
-  if (!allProducts) return false;
+  if (!allSales) return false;
 
-  return allProducts;
+  return allSales;
 };
 
 const getById = async (id) => {
@@ -41,6 +41,7 @@ const getById = async (id) => {
   return getSale;
 };
 
+/*
 const update = async ({ id, name, quantity }) => {
   const getProduct = await salesModel.getById(id);
 
@@ -64,8 +65,8 @@ const remove = async (id) => {
 
 module.exports = {
   create,
-  // getAll,
-  // getById,
+  getAll,
+  getById,
   // isValid,
   // update,
   // remove,

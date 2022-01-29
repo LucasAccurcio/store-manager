@@ -51,13 +51,13 @@ sales.post(
     res.status(201).json(newSale);
   }),
 );
-/* 
+
 sales.get(
   '/',
   rescue(async (_req, res) => {
-    const getProducts = await salesService.getAll();
+    const getSales = await salesService.getAll();
 
-    res.status(200).json(getProducts);
+    res.status(200).json(getSales);
   }),
 );
 
@@ -67,12 +67,12 @@ sales.get(
     const { id } = req.params;
     const getProduct = await salesService.getById(id);
 
-    if (getProduct.message) res.status(404).json(getProduct);
+    if (getProduct.message) return res.status(404).json(getProduct);
 
     res.status(200).json(getProduct);
   }),
 );
-
+/*
 sales.put(
   '/:id',
   rescue(async (req, res) => {
