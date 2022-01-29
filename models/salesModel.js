@@ -7,12 +7,12 @@ const createNewSalesId = async () => {
 };
 
 const create = async (newSale, newSaleId) => {
-  newSale.map(({ name, age }) => [newSaleId, name, age]);
+  const saleItems = newSale.map(({ productId, quantity }) => [newSaleId, productId, quantity]);
   try {
     await connection
-      .execute(
-        'INSERT INTO `sales_products` (`sale_id`, `product_id`, `quantity`) VALUES (?, ?, ?)',
-        [newSale],
+      .query(
+        'INSERT INTO `sales_products` (`sale_id`, `product_id`, `quantity`) VALUES ?',
+        [saleItems],
       );
         // TALVEZ O IDEAL SEJA CRIAR UMA NOVA FUNÇÃO PARA RECUPERAR UM ARRAY DE VENDAS DAQUELE SALE_ID ou **utilizar o getAllByID**
   } catch (error) {
@@ -29,11 +29,10 @@ const create = async (newSale, newSaleId) => {
 
 const getById = async (id) => {
   const [getSales] = await connection
-    .execute('SELECT * FROM `sales_products` WHERE `sale_id` = ?',
+    .execute('SELECT `product_id`, `quantity` FROM `sales_products` WHERE `sale_id` = ?',
     [id]);
     if (!getSales[0]) return { message: 'Sale not found' };
-
-    return getSales[0];
+    return getSales;
 };
 
 /*

@@ -1,11 +1,11 @@
 const salesModel = require('../models/salesModel');
 
-const isValid = (name, quantity) => {
+/* const isValid = (name, quantity) => {
   if (!name || typeof name !== 'string') return false;
   if (!quantity || typeof quantity !== 'number') return false;
 
   return true;
-};
+}; */
 
 const create = async (newSales) => {
   // const isProductValid = isValid(name, quantity);
@@ -16,7 +16,7 @@ const create = async (newSales) => {
     .create(newSales, newSalesId);
 
   const newSaleCreated = await salesModel.getById(newSalesId);
-
+  
   return {
     id: newSalesId,
     itemsSold: newSaleCreated,
@@ -66,7 +66,7 @@ module.exports = {
   create,
   // getAll,
   // getById,
-  isValid,
+  // isValid,
   // update,
   // remove,
 };
