@@ -31,8 +31,8 @@ const getAll = async () => {
   return allSales;
 };
 
-const getById = async (id) => {
-  const getSale = await salesModel.getById(id);
+const getSaleById = async (id) => {
+  const getSale = await salesModel.getSaleById(id);
 
   if (!getSale) {
     throw (new Error({ message: 'Erro não tratado ao encontrar produto por ID' }));
@@ -41,33 +41,36 @@ const getById = async (id) => {
   return getSale;
 };
 
-/*
-const update = async ({ id, name, quantity }) => {
-  const getProduct = await salesModel.getById(id);
+const update = async (saleId, saleToBeUpdate) => {
+  const getProduct = await salesModel.getProductById(saleId, saleToBeUpdate);
 
   if (getProduct.message) return getProduct;
 
-  await salesModel.update({ id, name, quantity });
+  await salesModel.update(saleId, saleToBeUpdate);
 
-  const updatedProduct = await salesModel.getById(id);
-  return updatedProduct;
+  const updatedProduct = await salesModel.getProductById(saleId, saleToBeUpdate);
+  // return updatedProduct;
+  return {
+    saleId,
+    itemUpdated: updatedProduct,
+  };
 };
 
 const remove = async (id) => {
-  const getProduct = await salesModel.getById(id);
+  const getProduct = await salesModel.getSaleById(id);
 
   if (getProduct.message) return getProduct;
 
   await salesModel.remove(id);
 
   return getProduct;
-}; */
+};
 
 module.exports = {
   create,
   getAll,
-  getById,
+  getSaleById,
   // isValid,
-  // update,
-  // remove,
+  update,
+  remove,
 };

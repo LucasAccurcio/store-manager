@@ -65,23 +65,27 @@ sales.get(
   '/:id',
   rescue(async (req, res) => {
     const { id } = req.params;
-    const getProduct = await salesService.getById(id);
+    const getProduct = await salesService.getSaleById(id);
 
     if (getProduct.message) return res.status(404).json(getProduct);
 
     res.status(200).json(getProduct);
   }),
 );
-/*
+
 sales.put(
   '/:id',
   rescue(async (req, res) => {
-    validateSaleSchema(req.body);
+    const updateOrderSale = req.body;
+    const saleToBeUpdate = updateOrderSale.map(serialize);
+    const { error } = saleSchema.validate(saleToBeUpdate);
+    if (error) {
+      throw error;
+    }
     const { id } = req.params;
-    const { name, quantity } = req.body;
-    const getProduct = await salesService.update({ id, name, quantity });
+    const getProduct = await salesService.update(Number(id), saleToBeUpdate);
 
-    if (getProduct.message) res.status(404).json(getProduct);
+    if (getProduct.message) return res.status(404).json(getProduct);
 
     res.status(200).json(getProduct);
   }),
@@ -93,10 +97,10 @@ sales.delete(
     const { id } = req.params;
     const deletedProduct = await salesService.remove(id);
 
-    if (deletedProduct.message) res.status(404).json(deletedProduct);
+    if (deletedProduct.message) return res.status(404).json(deletedProduct);
     res.status(200).json(deletedProduct);
   }),
-); */
+);
 
 module.exports = {
   sales, 
