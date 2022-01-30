@@ -418,7 +418,7 @@ describe('Sales', () => {
     });
   });
 
-  describe.skip('7 - Crie um endpoint para atualizar uma venda', () => {
+  describe('7 - Crie um endpoint para atualizar uma venda', () => {
     it('Será validado que não é possível atualizar vendas sem o campo quantity', async () => {
       let result;
       let resultProductId;
@@ -719,7 +719,7 @@ describe('Sales', () => {
     });
   });
 
-  describe.skip('10 - Crie um endpoint para deletar uma venda', () => {
+  describe('10 - Crie um endpoint para deletar uma venda', () => {
     it('Será validado que é possível deletar uma venda com sucesso', async () => {
       let result;
       let resultSales;
@@ -784,7 +784,7 @@ describe('Sales', () => {
     });
   });
 
-  describe.skip('11 - Atualize a quantidade de produtos', () => {
+  describe('11 - Atualize a quantidade de produtos', () => {
     it('Será validado que é possível atualizar a quantidade do produto ao fazer uma compra', async () => {
       let result;
       let responseProductId;
@@ -861,7 +861,7 @@ describe('Sales', () => {
     });
   });
 
-  describe.skip('12 - Valide a quantidade de produtos', () => {
+  describe('12 - Valide a quantidade de produtos', () => {
     it('Será validado que o estoque do produto nunca fique com a quantidade menor que zero', async () => {
       let result;
       let responseProductId;
