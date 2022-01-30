@@ -10,26 +10,12 @@ const serialize = (salesData) => ({
   quantity: salesData.quantity,
 });
 
-/* const isValid = (body) => {
-  console.log(body.length);
-  if (!body.product_id) {
-    return { code: 400, message: '"product_id" is required' };
-  }
-  if (!body.quantity) {
-    return { code: 400, message: '"quantity" is required' };
-  }
-  if (typeof body.quantity !== 'number' || body.quantity < 1) {
-    return { code: 422, message: '"quantity" must be a number larger than or equal to 1' };
-  } 
-  return true;
-}; */
 const saleSchema = joi.array().items(
   joi.object({
   productId: joi.number().integer().min(1).required(),
   quantity: joi.number().integer().min(1).required(),
 }),
 );
-// const schema = joi.array().items(joi.number().required(), joi.number().required());
 
 sales.post(
   '/',
@@ -40,9 +26,6 @@ sales.post(
       if (error) {
         throw error;
       }
-  
-    // const isSaleValid = isValid(req.body);
-    // if (isSaleValid.code) return res.status(isSaleValid.code).json(isSaleValid.message);
 
     const newSale = await salesService.create(orderSale);
 
@@ -104,5 +87,5 @@ sales.delete(
 
 module.exports = {
   sales, 
-  // validateSaleSchema,
+  serialize,
 };

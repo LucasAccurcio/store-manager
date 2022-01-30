@@ -97,7 +97,7 @@ const update = async (saleId, saleToBeUpdate) => {
 const remove = async (id) => {
   try {
   await connection
-    .execute('DELETE FROM `sales_products` WHERE id = ?', [id]);
+    .execute('DELETE FROM `sales_products` WHERE `sale_id` = ?', [id]);
   } catch (error) {
     return { message: ERROR_BD_CONNECTION };
   }
