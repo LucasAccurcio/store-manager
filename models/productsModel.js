@@ -44,11 +44,13 @@ const update = async ({ id, name, quantity }) => {
   await connection
     .execute('UPDATE `products` SET `name` = ?, `quantity` = ? WHERE `id` = ?',
     [name, quantity, id]);
+    return null;
 };
 
 const remove = async (id) => {
   await connection
     .execute('DELETE FROM `products` WHERE id = ?', [id]);
+    return null;
 };
 
 module.exports = {

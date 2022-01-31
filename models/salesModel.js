@@ -13,8 +13,8 @@ const createNewSalesId = async () => {
 };
 
 const create = async (newSale, newSaleId) => {
-  const saleItems = newSale.map(({ productId, quantity }) => [newSaleId, productId, quantity]);
   try {
+  const saleItems = newSale.map(({ productId, quantity }) => [newSaleId, productId, quantity]);
     await connection
       .query(
         'INSERT INTO `sales_products` (`sale_id`, `product_id`, `quantity`) VALUES ?',
@@ -89,6 +89,7 @@ const update = async (saleId, saleToBeUpdate) => {
     await connection
     .execute('UPDATE `sales_products` SET `quantity` = ? WHERE `sale_id` = ? AND `product_id` = ?',
     [quantity, saleId, productId]);
+    return null;
   } catch (error) {
     return { message: ERROR_BD_CONNECTION };
   }
@@ -98,6 +99,7 @@ const remove = async (id) => {
   try {
   await connection
     .execute('DELETE FROM `sales_products` WHERE `sale_id` = ?', [id]);
+    return null;
   } catch (error) {
     return { message: ERROR_BD_CONNECTION };
   }
