@@ -1,16 +1,19 @@
 const productModel = require('../models/productsModel');
 
-const isValid = (name, quantity) => {
-  if (!name || typeof name !== 'string') return false;
-  if (!quantity || typeof quantity !== 'number') return false;
-
+const isValid = (quantity) => {
+  if (typeof quantity !== 'number') {
+    return {
+      code: 422,
+      message: '"quantity" must be a number larger than or equal to 1',
+    };
+  }
   return true;
 };
 
 const create = async ({ name, quantity }) => {
-  const isProductValid = isValid(name, quantity);
+  const isProductValid = isValid(quantity);
 
-  if (!isProductValid) return false;
+  if (isProductValid.message) return isProductValid;
 
   const createNewProduct = await productModel
     .create({ name, quantity });

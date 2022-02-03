@@ -1,4 +1,4 @@
-const sinon = require('sinon');
+/* const sinon = require('sinon');
 const { expect } = require('chai');
 
 const connection = require('../../models/connection');
@@ -506,4 +506,4 @@ describe('### Camada Model ###', () => {
       });
     });
   });
-});
+}); */

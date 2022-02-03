@@ -4,6 +4,8 @@ function nameErrors(err) {
   switch (err.message) {
     case '"name" is required':
       return { code: 400, message: err.message };
+    case '"name" must be a string':
+      return { code: 400, message: err.message };
     case '"name" length must be at least 5 characters long':
       return { code: 422, message: err.message };
     default:

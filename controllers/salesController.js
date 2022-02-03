@@ -29,7 +29,7 @@ sales.post(
 
     const newSale = await salesService.create(orderSale);
 
-    if (newSale.message) return res.status(409).json({ message: newSale.message });
+    if (newSale.message) return res.status(422).json({ message: newSale.message });
     
     res.status(201).json(newSale);
   }),
