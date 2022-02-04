@@ -15,11 +15,10 @@ const createNewSalesId = async () => {
 const create = async (newSale, newSaleId) => {
   try {
   const saleItems = newSale.map(({ productId, quantity }) => [newSaleId, productId, quantity]);
+
     await connection
-      .query(
-        'INSERT INTO `sales_products` (`sale_id`, `product_id`, `quantity`) VALUES ?',
-        [saleItems],
-      );
+      .query('INSERT INTO `sales_products` (`sale_id`, `product_id`, `quantity`) VALUES ?',
+        [saleItems]);
 
     const [getSales] = await connection
     .execute('SELECT `product_id`, `quantity` FROM `sales_products` WHERE `sale_id` = ?',
@@ -50,12 +49,12 @@ const getAll = async () => {
 const getSaleById = async (id) => {
   try {
   const [getSales] = await connection
-    .execute(`SELECT 
-    sa.date AS \`date\`,
-    sp.product_id AS \`product_id\`,
-    sp.quantity AS \`quantity\`
-    FROM \`sales_products\` AS sp
-    INNER JOIN \`sales\` AS sa 
+    .execute(`SELECT
+    sa.date AS date,
+    sp.product_id AS product_id,
+    sp.quantity AS quantity
+    FROM sales_products AS sp
+    INNER JOIN sales AS sa 
     ON sp.sale_id = sa.id
     WHERE sp.sale_id = ?`,
     [id]);

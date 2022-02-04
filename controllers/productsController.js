@@ -38,7 +38,6 @@ products.get(
   '/',
   rescue(async (_req, res) => {
     const getProducts = await productsService.getAll();
-
     res.status(200).json(getProducts);
   }),
 );
@@ -50,7 +49,6 @@ products.get(
     const getProduct = await productsService.getById(id);
 
     if (getProduct.message) res.status(404).json(getProduct);
-
     res.status(200).json(getProduct);
   }),
 );

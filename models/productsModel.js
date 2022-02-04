@@ -13,7 +13,7 @@ const create = async ({ name, quantity }) => {
 
   const [result] = await connection
     .execute(
-      'INSERT INTO `products` (`name`, `quantity`) VALUES (?, ?)',
+      'INSERT INTO products (name, quantity) VALUES (?, ?)',
       [name, quantity],
     );
 
@@ -33,7 +33,7 @@ const getAll = async () => {
 
 const getById = async (id) => {
   const [getProduct] = await connection
-    .execute('SELECT * FROM `products` WHERE `id` = ?',
+    .execute('SELECT * FROM products WHERE id = ?',
     [id]);
     if (!getProduct[0]) return { message: 'Product not found' };
 
@@ -44,6 +44,13 @@ const update = async ({ id, name, quantity }) => {
   await connection
     .execute('UPDATE `products` SET `name` = ?, `quantity` = ? WHERE `id` = ?',
     [name, quantity, id]);
+    return null;
+};
+
+const updateQuantity = async (id, quantity) => {
+  await connection
+    .execute('UPDATE `products` SET `quantity` = ? WHERE `id` = ?',
+    [quantity, id]);
     return null;
 };
 
@@ -58,5 +65,6 @@ module.exports = {
   getAll,
   getById,
   update,
+  updateQuantity,
   remove,
 };
