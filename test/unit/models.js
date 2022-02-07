@@ -1,4 +1,4 @@
-/* const sinon = require('sinon');
+const sinon = require('sinon');
 const { expect } = require('chai');
 
 const connection = require('../../models/connection');
@@ -43,7 +43,7 @@ describe('### Camada Model ###', () => {
         });
       });
 
-      describe('Função "create" dados inválidos', () => {
+   describe('Função "create" dados inválidos', () => {
         const payload = {
           name: "Jóia do infinito",
           quantity: 10,
@@ -506,4 +506,4 @@ describe('### Camada Model ###', () => {
       });
     });
   });
-}); */
+}); 

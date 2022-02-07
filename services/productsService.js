@@ -18,7 +18,7 @@ const create = async ({ name, quantity }) => {
   const createNewProduct = await productModel
     .create({ name, quantity });
 
-  return (createNewProduct);
+  return createNewProduct;
 };
 
 const getAll = async () => {
