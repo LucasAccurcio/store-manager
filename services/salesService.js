@@ -101,6 +101,8 @@ const remove = async (id) => {
 };
 
 module.exports = {
+  isQuantityValid,
+  getAllProducts,
   create,
   getAll,
   getSaleById,

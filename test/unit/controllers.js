@@ -5,8 +5,8 @@ const { expect } = require('chai');
 const routes = require('../../controllers/routes');
 const productService = require('../../services/productsService');
 
-describe('### Camada Controller ###', () => {
-  describe('*** PRODUCTS ***', () => {
+describe('--------------- Camada Controller ---------------', () => {
+  describe('--------------- PRODUCTS ---------------', () => {
     describe('Testando validações com JOI', () => {
       describe('quando o payload informado é válido', () => {
 

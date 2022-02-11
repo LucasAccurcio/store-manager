@@ -5,8 +5,8 @@ const connection = require('../../models/connection');
 const productsModel = require('../../models/productsModel');
 const salesModel = require('../../models/salesModel');
 
-describe('### Camada Model ###', () => {
-  describe('*** PRODUCTS ***', () => {
+describe('--------------- Camada Model ---------------', () => {
+  describe('--------------- PRODUCTS ---------------', () => {
     describe('MÉTODO POST', () => {
       describe('Função "create" dados válidos', () => {
         const payloadProduct = {
@@ -216,7 +216,7 @@ describe('### Camada Model ###', () => {
     });
   });
 
-  describe('*** SALES ***', () => {
+  describe('--------------- SALES ---------------', () => {
 
     describe('MÉTODO POST', () => {
       describe('Função "createNewSalesId"', () => {
@@ -311,6 +311,7 @@ describe('### Camada Model ###', () => {
         after(async () => {
           connection.execute.restore();
         });
+
         describe('Quando todos os dados é recebido', () => {
           
           it('retorna um array com objetos', async () => {
