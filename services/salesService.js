@@ -64,13 +64,11 @@ const getSaleById = async (id) => {
 
 const update = async (saleId, saleToBeUpdate) => {
   const getProduct = await salesModel.getProductById(saleId, saleToBeUpdate);
-
   if (getProduct.message) return getProduct;
 
   await salesModel.update(saleId, saleToBeUpdate);
 
   const updatedProduct = await salesModel.getProductById(saleId, saleToBeUpdate);
-
   return {
     saleId,
     itemUpdated: updatedProduct,

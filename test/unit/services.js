@@ -398,6 +398,15 @@ describe('--------------- Camada Service ---------------', () => {
           }
         ];
 
+        before(() => {
+          sinon.stub(productsModel, 'getAll')
+            .resolves(products_BD);
+        });
+
+        after(() => {
+          productsModel.getAll.restore();
+        });
+
         it('retorna um objeto', async () => {
           const response = await salesService.create(payloadSales);
           expect(response).to.be.an('object');
@@ -471,12 +480,15 @@ describe('--------------- Camada Service ---------------', () => {
               .resolves(executeCreateNewSaleId);
               sinon.stub(salesModel, 'create')
                 .resolves(executeCreate);
+                sinon.stub(productsModel, 'updateQuantity')
+                .resolves(null);
         });
 
         after(() => {
           productsModel.getAll.restore();
           salesModel.createNewSalesId.restore();
           salesModel.create.restore();
+          productsModel.updateQuantity.restore();
         });
  
 
@@ -526,7 +538,107 @@ describe('--------------- Camada Service ---------------', () => {
           expect(response[0]).to.have.a.property('product_id');
         });
       });
-    })
+    });
+
+    describe('GET - "GetSaleById" Solicita os dados de uma venda do BD', () => {
+      describe('quando o retorno é um sucesso', () => {
+        const searchId = 1;
+        before(() => {
+          const execute = [{
+            saleId: 1,
+            date: '2022-01-05T11:55:00.000Z',
+            product_id: 2,
+            quantity: 2
+        }];
+
+          sinon.stub(salesModel, 'getSaleById')
+            .resolves(execute);
+        });
+
+        after(() => {
+          salesModel.getSaleById.restore();
+        });
+
+        it('retorna um array', async () => {
+          const response = await salesService.getSaleById(searchId);
+          expect(response).to.be.an('array');
+        });
+
+        it('retorna os dados gravados no BD', async () => {
+          const response = await salesService.getSaleById(searchId);
+          expect(response[0]).to.have.a.property('saleId');
+          expect(response[0]).to.have.a.property('date');
+          expect(response[0]).to.have.a.property('quantity');
+          expect(response[0]).to.have.a.property('product_id');
+        });
+      });
+    });
+
+    describe('Update - Solicita atualização de uma venda do BD', () => {
+      describe('quando a venda não é encontrada', () => {
+        const searchId = 1;
+        const updateSale = [{ product_id: 1, quantity: 2 }];
+
+        before(() => {
+          const execute = { message: 'Sale not found' };
+
+          sinon.stub(salesModel, 'getProductById')
+            .resolves(execute);
+        });
+
+        after(() => {
+          salesModel.getProductById.restore();
+        });
+
+        it('retorna um objeto', async () => {
+          const response = await salesService.update(searchId, updateSale);
+          expect(response).to.be.an('object');
+        });
+
+        it('retorna a mensagem "Sale not found"', async () => {
+          const response = await salesService.update(searchId, updateSale);
+          expect(response.message).to.be.equal('Sale not found');
+
+        });
+      });
+
+      describe('quando a venda é encontrada e atualizada', () => {
+        const searchId = 1;
+        const updateSale = [{ product_id: 4, quantity: 2 }];
+        const products_BD = [
+          { id: 1, name: 'Martelo de Thor', quantity: 8 },
+          { id: 2, name: 'Traje de encolhimento', quantity: 20 },
+          { id: 3, name: 'Escudo do Capitão América', quantity: 30 },
+          { id: 4, name: 'Joia do infinito', quantity: 1 }
+        ];
+
+        before(() => {
+          const executeGetProduct = [{ product_id: 4, quantity: 8 }];
+
+          sinon.stub(salesModel, 'getProductById')
+            .resolves(executeGetProduct);
+            sinon.stub(salesModel, 'update')
+            .resolves(updateSale);
+        });
+
+        after(() => {
+          salesModel.getProductById.restore();
+          salesModel.update.restore();
+        });
+
+        it('retorna um objeto', async () => {
+          const response = await salesService.update(searchId, updateSale);
+          expect(response).to.be.an('object');
+        });
+
+        it('com as propriedades "saleId" e "itemUpdated"', async () => {
+          const response = await salesService.update(searchId, updateSale);
+          expect(response).to.have.a.property('saleId');
+          expect(response).to.have.a.property('itemUpdated');
+        });
+      });
+    });
+
   });
 
 });
