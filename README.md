@@ -74,10 +74,7 @@ Neste projeto, consegui desenvolver as seguintes habilidades:
   - Cria um produto - Método POST
     `http://localhost:3000/products`
     * body:
-      >{
-      >  "name": "Joia do Poder",
-      >  "quantity": 1
-      >}
+      `{ "name": "Joia do Poder", "quantity": 1 }`
 
   - Verifica se existe um produto cadastrado - Médoto GET
     `http://localhost:3000/products`
@@ -92,16 +89,16 @@ Neste projeto, consegui desenvolver as seguintes habilidades:
   - Altera um produto - Método PUT
     `http://localhost:3000/products/1`
     * body:
-      >{
-      >  "name": "Joia do Infinito",
-      >  "quantity": 100
-      >}
+      `{ "name": "Joia do Infinito", "quantity": 100 }`
 
   - Deleta um produto - Método DELETE
     `http://localhost:3000/products/1`
 
 ## Rodando os testes desenvolvidos
-  `npm test`
+  - Apenas os testes:
+    
+    `npm test`
 
   - Para rodar o testes e exibir o relatório de cobertura de testes:
-  `npm run test:coverage`
+    
+    `npm run test:coverage`
